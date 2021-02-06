@@ -22,7 +22,8 @@ const reply = [
 [
 	"Limit your applications producing noise to be only from Zoom.", 
 	"Disable or move external speakers connected to the computer.", 
-	"Check to see if you have the correct microphone you want selected."
+	"Check to see if you have the correct microphone you want selected.",
+	"Check to see if you have the correct speakers you want selected.\n To check if you have the right speaker selected, click the volume icon and it should tell you the name of the computer's internal speaker."
 	], 
 //1
 [
@@ -75,8 +76,9 @@ function output(input) {
     .replace(/i feel /g, "")
     .replace(/whats/g, "what is")
     .replace(/please /g, "")
+	.replace(/ing /g, " ")
     .replace(/ please/g, "");
-
+	console.log(text);
 //compare arrays
 //then search keyword
 //then random alternative
@@ -100,7 +102,7 @@ function output(input) {
 }
 
 function compare(triggerArray, replyArray, text) {
-  let item;
+  let item = "";
   var keywords = [];
   var responses = [];
   for (let x = 0; x < triggerArray.length; x++) {
@@ -110,12 +112,20 @@ function compare(triggerArray, replyArray, text) {
 		if(triggerArray[x][y] == "echo"){
 			responses.push(reply[x][0]);
 			responses.push(reply[x][1]);
+		}else if(triggerArray[x][y] == "microphone"){
+			responses.push(reply[x][2]);
+			//responses.push
+		}else{
+			responses.push(reply[x][3]);
 		}
       }
     }
   }
   console.log(keywords.toString());
   console.log(responses.toString());
+  for(let x = 0; x < responses.length; x++){
+	  item = item + " " + responses[x];
+  }
   return item;
 }
 
