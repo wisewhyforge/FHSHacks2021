@@ -2,19 +2,7 @@ const trigger = [
 //0 
 ["sound", "echo", "audio", "speaker", "microphone"],
 //1
-["lag", "freeze", "disconnect", "crash"],
-//2
-["what is going on", "what is up"],
-//3
-["happy", "good", "well", "fantastic", "cool"],
-//4
-["bad", "bored", "tired", "sad"],
-//5
-["tell me story", "tell me joke"],
-//6
-["thanks", "thank you"],
-//7
-["bye", "good bye", "goodbye"]
+["lag", "freeze", "disconnect", "crash"]
 ];
 
 const reply = [
@@ -30,31 +18,13 @@ const reply = [
     "Limit CPU usage by closing any unnecesary backrgound apps and removing any virtual backgrounds or filters.",
     "For ChromeOS make sure you are selected on the Zoom window when getting admitted to the meeting to prevent Zoom from crashing.",
     "Check your connection speed by going to settings-> statistics, check if the latency is high. If so, try limiting network usage.",
-	"If zoom is consistently being slow even after all devices using the network have been keeping usage at a minimum you might want to invest in a higher bandwidth WiFi."
-  ],
-//2
-[
-    "Nothing much",
-    "Exciting things!"
-  ],
-//3
-["Glad to hear it"],
-//4
-["Why?", "Cheer up buddy"],
-//5
-["What about?", "Once upon a time..."],
-//6
-["You're welcome", "No problem"],
-//7
-["Goodbye", "See you later"],
+	"If zoom is consistently being slow even after all devices using the network have been keeping usage at a minimum you might want to invest in a higher bandwidth WiFi.",
+	"Check your internet connection."
+  ]
 ];
 
 const alternative = [
-  "Same",
-  "Go on...",
-  "Try again",
-  "I'm listening...",
-  "Bro..."
+  "Sorry I didn't quite get that please try again."
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -96,7 +66,7 @@ function output(input) {
 
     //clear input value
     document.getElementById("input").value = "";
-
+  console.log("Stuff: " + input);
   //update DOM
   addChat(input, product);
 }
@@ -108,15 +78,18 @@ function compare(triggerArray, replyArray, text) {
   for (let x = 0; x < triggerArray.length; x++) {
     for (let y = 0; y < triggerArray[x].length; y++) {
       if (text.includes(triggerArray[x][y])) {
-        keywords.push(triggerArray[x][y]);
+        //keywords.push(triggerArray[x][y]);
 		if(triggerArray[x][y] == "echo"){
 			responses.push(reply[x][0]);
 			responses.push(reply[x][1]);
 		}else if(triggerArray[x][y] == "microphone"){
 			responses.push(reply[x][2]);
 			//responses.push
-		}else{
+		}else if(x==0){
 			responses.push(reply[x][3]);
+		}else if(triggerArray[x][y] == "disconnect"){
+			responses.push(reply[x][1]);
+			responses.push(reply[x][4]);
 		}
       }
     }
@@ -124,7 +97,7 @@ function compare(triggerArray, replyArray, text) {
   console.log(keywords.toString());
   console.log(responses.toString());
   for(let x = 0; x < responses.length; x++){
-	  item = item + " " + responses[x];
+	  item += " " + responses[x];
   }
   return item;
 }
@@ -134,6 +107,7 @@ function addChat(input, product) {
   let userDiv = document.createElement("div");
   userDiv.id = "user";
   userDiv.innerHTML = `You: <span id="user-response">${input}</span>`;
+  console.log(mainDiv);
   mainDiv.appendChild(userDiv);
 
   let botDiv = document.createElement("div");
