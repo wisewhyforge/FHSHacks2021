@@ -2,7 +2,9 @@ const trigger = [
 //0 
 ["sound", "echo", "audio", "speaker", "microphone"],
 //1
-["lag", "freeze", "disconnect", "crash"]
+["lag", "freeze", "disconnect", "crash"],
+//2
+["webcam", "camera"]
 ];
 
 const reply = [
@@ -19,8 +21,14 @@ const reply = [
     "For ChromeOS make sure you are selected on the Zoom window when getting admitted to the meeting to prevent Zoom from crashing.",
     "Check your connection speed by going to settings-> statistics, check if the latency is high. If so, try limiting network usage.",
 	"If zoom is consistently being slow even after all devices using the network have been keeping usage at a minimum you might want to invest in a higher bandwidth WiFi.",
-	"Check your internet connection."
-  ]
+	"Check your internet connection.",
+	"Make sure you have the latest Zoom version.",
+	"If the application persistently stops working, try running using the website version of zoom. In order to do this, on your zoom \"Launch Meeting\" Website click on the \"Launch Meeting\" button twice. If the Zoom app fails twice then, there should be a link where you can click on the \"Join from the Browser\" link."
+  ],
+ //2
+[
+    "Check Zoom Settings: See if you are connected with the camera buttons located on the lower left-hand side of the screen.",
+  ], 
 ];
 
 const alternative = [
@@ -90,6 +98,12 @@ function compare(triggerArray, replyArray, text) {
 		}else if(triggerArray[x][y] == "disconnect"){
 			responses.push(reply[x][1]);
 			responses.push(reply[x][4]);
+		}else if(triggerArray[x][y] == "crash"){
+			responses.push(reply[x][1]);
+			responses.push(reply[x][5]);
+			responses.push(reply[x][6]);
+		}else{
+			responses.push(reply[x][0]);
 		}
       }
     }
