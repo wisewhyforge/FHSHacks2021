@@ -32,7 +32,9 @@ const reply = [
 ];
 
 const alternative = [
-  "Sorry I didn't quite get that please try again."
+  "Sorry I didn't quite get that. Please try again.",
+  "In can't find what you were looking for.",
+  "I don't understand..."
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -63,7 +65,9 @@ function output(input) {
   if (compare(trigger, reply, text).length != 0) {
     product = compare(trigger, reply, text);
   }else {
-    product = alternative;
+	singularAlternative = [];
+	singularAlternative.push(alternative[Math.floor(Math.random()*alternative.length)]);
+    product = singularAlternative;
   }
 
 	//document.getElementById("chatbot").innerHTML = product;
